@@ -4,6 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 
 const LoginForm = () => {
+  const login = async () => {
+    return null;
+  };
   return (
     <div className="w-full flex flex-col justify-center">
       <h1 className="text-center py-5">Login Form</h1>
