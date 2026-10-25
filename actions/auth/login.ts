@@ -12,12 +12,14 @@ export async function login(formData: FormData) {
     password: formData.get("password") as string,
   });
 
+  console.log(formData);
+
   if (error) {
     redirect(`/login?error=${encodeURIComponent(error.message)}`);
   }
 
   revalidatePath("/", "layout");
-  redirect("/");
+  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {

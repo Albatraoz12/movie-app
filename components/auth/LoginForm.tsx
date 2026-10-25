@@ -2,29 +2,35 @@
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
+import { login } from "@/actions/auth/login";
 
 const LoginForm = () => {
-  const login = async () => {
-    return null;
-  };
   return (
     <div className="w-full flex flex-col justify-center">
       <h1 className="text-center py-5">Login Form</h1>
-      <form className="w-full flex justify-center">
+      <form className="w-full flex justify-center" action={login}>
         <FieldSet className="w-full max-w-xs">
           <FieldGroup>
             <Field>
               <FieldLabel htmlFor="email">Email</FieldLabel>
-              <Input id="email" type="email" placeholder="John.doe@email.com" />
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                placeholder="John.doe@email.com"
+              />
             </Field>
             <Field>
               <FieldLabel htmlFor="password">Password</FieldLabel>
-              <Input id="password" type="password" placeholder="••••••••" />
+              <Input
+                id="password"
+                type="password"
+                name="password"
+                placeholder="••••••••"
+              />
             </Field>
           </FieldGroup>
-          <Button variant="outline" onClick={() => alert("Clicked!")}>
-            Login
-          </Button>
+          <Button variant="outline">Login</Button>
         </FieldSet>
       </form>
     </div>
