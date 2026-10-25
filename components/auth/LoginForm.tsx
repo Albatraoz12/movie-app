@@ -5,6 +5,7 @@ import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { login, type LoginState } from "@/actions/auth/login";
+import { Spinner } from "../ui/spinner";
 
 const initialState: LoginState = {};
 
@@ -47,7 +48,13 @@ const LoginForm = () => {
           )}
 
           <Button variant="outline" disabled={isPending}>
-            {isPending ? "Logging in..." : "Login"}
+            {isPending ? (
+              <>
+                Logging in <Spinner />
+              </>
+            ) : (
+              "Login"
+            )}
           </Button>
         </FieldSet>
       </form>
