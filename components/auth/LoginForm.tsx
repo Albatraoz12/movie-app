@@ -1,14 +1,20 @@
 "use client";
+
+import { useActionState } from "react";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { login } from "@/actions/auth/login";
+import { login, type LoginState } from "@/actions/auth/login";
+
+const initialState: LoginState = {};
 
 const LoginForm = () => {
+  const [state, formAction, isPending] = useActionState(login, initialState);
+
   return (
     <div className="w-full flex flex-col justify-center">
       <h1 className="text-center py-5">Login Form</h1>
-      <form className="w-full flex justify-center" action={login}>
+      <form className="w-full flex justify-center" action={formAction}>
         <FieldSet className="w-full max-w-xs">
           <FieldGroup>
             <Field>
@@ -18,6 +24,8 @@ const LoginForm = () => {
                 type="email"
                 name="email"
                 placeholder="John.doe@email.com"
+                defaultValue={state.email}
+                aria-invalid={!!state.error}
               />
             </Field>
             <Field>
@@ -27,10 +35,20 @@ const LoginForm = () => {
                 type="password"
                 name="password"
                 placeholder="••••••••"
+                aria-invalid={!!state.error}
               />
             </Field>
           </FieldGroup>
-          <Button variant="outline">Login</Button>
+
+          {state.error && (
+            <p role="alert" className="text-sm text-destructive">
+              {state.error}
+            </p>
+          )}
+
+          <Button variant="outline" disabled={isPending}>
+            {isPending ? "Logging in..." : "Login"}
+          </Button>
         </FieldSet>
       </form>
     </div>

@@ -4,18 +4,32 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 
-export async function login(formData: FormData) {
+export type LoginState = {
+  error?: string;
+  email?: string;
+};
+
+export async function login(
+  prevState: LoginState,
+  formData: FormData,
+): Promise<LoginState> {
+  if (!formData)
+    return {
+      error: "Missing credentials",
+    };
+
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
   const supabase = await createClient();
 
   const { error } = await supabase.auth.signInWithPassword({
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
+    email,
+    password,
   });
 
-  console.log(formData);
-
   if (error) {
-    redirect(`/login?error=${encodeURIComponent(error.message)}`);
+    return { error: error.message, email };
   }
 
   revalidatePath("/", "layout");
