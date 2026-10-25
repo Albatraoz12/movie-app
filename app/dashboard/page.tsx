@@ -5,14 +5,13 @@ import { redirect } from "next/navigation";
 
 const page = async () => {
   const user = await getUserInfo();
-  console.log(user);
   if (!user) {
     redirect("/auth/login");
   }
 
   return (
     <section className="flex gap-3 items-center m-5">
-      <h1>Welcome {user.email}</h1>
+      <h1>Welcome {user.first_name + " " + user.last_name}</h1>
       <Button variant="destructive" onClick={logout} className="cursor-pointer">
         Logout
       </Button>

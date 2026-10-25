@@ -7,5 +7,13 @@ export const getUserInfo = async () => {
     data: { user },
   } = await supabase.auth.getUser();
 
-  return user;
+  if (!user) return null;
+
+  // fetch userdata
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("first_name, last_name, email")
+    .single();
+
+  return profile;
 };
