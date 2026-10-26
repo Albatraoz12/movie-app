@@ -9,7 +9,6 @@ const Movies = () => {
       {moviesData &&
         moviesData.length > 0 &&
         moviesData.map((movie) => <MovieCard key={movie.id} movie={movie} />)}
-      {/* <MovieCard movie={moviesData} /> */}
     </section>
   );
 };
